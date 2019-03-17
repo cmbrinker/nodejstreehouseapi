@@ -1,4 +1,5 @@
-//A node.js app that retrieves profile information from the Treehouse API searching by username
+//Problem: We need a simple way to look at user's badge count and JS points
+//Solution: Use Node.js to connect to Treehouse's API to get Profile Info to print out
 
 const https = require('https');
 
@@ -7,7 +8,6 @@ function getProfile(username) {
     const message = `${username} has ${badgeCount} total badge(s) and ${points} total points in Javascript`;
     console.log(message);
   }
-
   const request = https.get(`https:teamtreehouse.com/${username}.json`, (res) => {
     let body = "";
     res.on('data', (data) => {
@@ -20,4 +20,10 @@ function getProfile(username) {
   });
 }
 
-getProfile("chrisbrinker");
+const users = [
+  "chalkers",
+  "alenaholligan",
+  "chrisbrinker"
+];
+
+users.forEach(getProfile); //shortened version of users.forEach(function(username) {getProfile(username)}) because there's only 1 arguement
