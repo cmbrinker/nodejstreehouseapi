@@ -23,7 +23,11 @@ function getProfile(username) {
 const users = [
   "chalkers",
   "alenaholligan",
+  "davemcfarland",
   "chrisbrinker"
 ];
 
 users.forEach(getProfile); //shortened version of users.forEach(function(username) {getProfile(username)}) because there's only 1 arguement
+
+const argvUsers = process.argv.slice(2); //accepting argv arguements from the console and disregarding the first 2 results of the returned array
+argvUsers.forEach(getProfile); //specifying specific users not necessarily contained in the users array, profile.argv and slice() practice
