@@ -8,16 +8,23 @@ function getProfile(username) {
     const message = `${username} has ${badgeCount} total badge(s) and ${points} total points in Javascript`;
     console.log(message);
   }
-  const request = https.get(`https:teamtreehouse.com/${username}.json`, (res) => {
-    let body = "";
-    res.on('data', (data) => {
-      body += data.toString();
+  try {
+    const request = https.get(`https:teamtreehouse.com/${username}.json`, (res) => {
+      let body = "";
+      res.on('data', (data) => {
+        body += data.toString();
+      });
+      res.on('end', () => {
+        const profile = JSON.parse(body);
+        printMessage(username, profile.badges.length, profile.points.JavaScript);
+      });
     });
-    res.on('end', () => {
-      const profile = JSON.parse(body);
-      printMessage(username, profile.badges.length, profile.points.JavaScript);
-    });
-  });
+    request.on('error', (error) => {
+      console.error(`Problem with request: ${error.message}`);
+    })
+  } catch {
+    console.error(error.message);
+  }
 }
 
 const users = [
